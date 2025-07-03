@@ -22,6 +22,7 @@
   "include": [
   "src/**/*",
   "commitlint.config.cjs",
-  "commitlint.config.mjs"
+  "commitlint.config.mjs",
+  "jest.config.ts"
 ]
 }
