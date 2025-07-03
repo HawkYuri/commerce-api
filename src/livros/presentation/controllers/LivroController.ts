@@ -8,9 +8,12 @@ import {
   Patch,
   HttpException,
   HttpStatus,
+  Query,
 } from '@nestjs/common';
 import { LivroService } from 'src/livros/application/LivroService';
 import { CreateLivroDto } from '../dtos/create-livro.dto';
+import { ILivroFiltro } from 'src/livros/domain/repositories/ILivroRepository';
+import { Livro } from 'src/livros/domain/entities/Livro';
 @Controller('livros')
 export class LivroController {
   constructor(private readonly livroService: LivroService) {}
@@ -42,7 +45,17 @@ export class LivroController {
       justificativaStatus: livro['getJustificativaStatus'](),
     };
   }
+  @Get()
+  async listar(@Query() query: any): Promise<Livro[]> {
+    const filtro: ILivroFiltro = {
+      titulo: query.titulo as string,
+      autor: query.autor as string,
+      categoria: query.categoria as string,
+      ativo: query.ativo !== undefined ? query.ativo === 'true' : undefined,
+    };
 
+    return this.livroService.listarTodos(filtro);
+  }
   @Patch(':id')
   async atualizar(@Param('id') id: string, @Body() dados: Partial<CreateLivroDto>) {
     try {

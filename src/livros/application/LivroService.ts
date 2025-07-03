@@ -1,7 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { v4 as uuidv4 } from 'uuid';
 import { Livro } from '../domain/entities/Livro';
-import { ILivroRepositoryToken, ILivroRepository } from '../domain/repositories/ILivroRepository';
+import {
+  ILivroRepositoryToken,
+  ILivroRepository,
+  ILivroFiltro,
+} from '../domain/repositories/ILivroRepository';
 import { CreateLivroDto } from '../presentation/dtos/create-livro.dto';
 
 @Injectable()
@@ -52,5 +56,9 @@ export class LivroService {
 
     livro.reativar();
     await this.livroRepository.salvar(livro);
+  }
+
+  async listarTodos(filtro?: ILivroFiltro): Promise<Livro[]> {
+    return this.livroRepository.listar(filtro);
   }
 }
