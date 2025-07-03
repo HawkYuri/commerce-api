@@ -18,5 +18,10 @@
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false,
     "strict": true
-  }
+  },
+  "include": [
+  "src/**/*",
+  "commitlint.config.cjs",
+  "commitlint.config.mjs"
+]
 }
