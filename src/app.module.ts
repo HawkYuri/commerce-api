@@ -1,7 +1,17 @@
 import { Module } from '@nestjs/common';
-import { LivroModule } from './livros/livro.module';
+import { ImpressoraService } from './livros/application/ImpressoraService';
+import { IImpressoraRepositoryToken } from './livros/domain/repositories/IImpressoraRepository';
+import { ImpressoraRepositoryInMemory } from './livros/infrastructure/ImpressoraRepositoryInMemory';
+import { ImpressoraController } from './livros/presentation/controllers/ImpressoraController';
 
 @Module({
-  imports: [LivroModule],
+  controllers: [ImpressoraController],
+  providers: [
+    ImpressoraService,
+    {
+      provide: IImpressoraRepositoryToken,
+      useClass: ImpressoraRepositoryInMemory,
+    },
+  ],
 })
 export class AppModule {}
